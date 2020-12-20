@@ -7,6 +7,7 @@ import (
 	_ "github.com/golang-migrate/migrate/source/file"
 
 	//"course-phones-review/gadgets/smartphones/web"
+	"course-phones-review/gadgets/smartphones/web"
 	"course-phones-review/internal/database"
 	"course-phones-review/internal/logs"
 	//reviews "github.com/tomiok/course-phones-review/reviews/web"
@@ -27,9 +28,9 @@ func main() {
 
 	reviewHandler := reviews.NewReviewHandler(mongoClient)*/
 
-	//handler := web.NewCreateSmartphoneHandler(client)
+	handler := web.NewCreateSmartphoneHandler(client)
 	//mux := Routes(handler, reviewHandler)
-	mux := Routes()
+	mux := Routes(handler)
 	server := NewServer(mux)
 	server.Run()
 }
