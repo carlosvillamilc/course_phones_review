@@ -7,7 +7,9 @@ import (
 	_ "github.com/golang-migrate/migrate/source/file"
 
 	//"course-phones-review/gadgets/smartphones/web"
-	"course-phones-review/gadgets/smartphones/web"
+
+	web_smartphone "course-phones-review/gadgets/smartphones/web"
+	web_user "course-phones-review/gadgets/users/web"
 	"course-phones-review/internal/database"
 	"course-phones-review/internal/logs"
 	//reviews "github.com/tomiok/course-phones-review/reviews/web"
@@ -28,9 +30,10 @@ func main() {
 
 	reviewHandler := reviews.NewReviewHandler(mongoClient)*/
 
-	handler := web.NewCreateSmartphoneHandler(client)
+	smartphoneHandler := web_smartphone.NewCreateSmartphoneHandler(client)
+	userHandler := web_user.NewCreateUserHandler(client)
 	//mux := Routes(handler, reviewHandler)
-	mux := Routes(handler)
+	mux := Routes(smartphoneHandler, userHandler)
 	server := NewServer(mux)
 	server.Run()
 }
@@ -50,9 +53,13 @@ func doMigrate(client *database.MySqlClient, dbName string) {
 
 	current, _, _ := m.Version()
 	logs.Log().Infof("current migrations version in %d", current)
-	err = m.Migrate(migrationsScriptsVersion)		
-	if err != nil && err.Error() == "no change" {		
+	err = m.Migrate(migrationsScriptsVersion)
+
+	if err != nil {
+		logs.Log().Error(err.Error())
+	}
+
+	if err != nil && err.Error() == "no change" {
 		logs.Log().Info("no migration needed")
 	}
 }
-

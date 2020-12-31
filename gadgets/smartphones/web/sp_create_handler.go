@@ -1,4 +1,4 @@
-package web
+package web_smartphone
 
 import (
 	"course-phones-review/gadgets/smartphones/gateway"
@@ -11,11 +11,15 @@ import (
 	"github.com/go-chi/chi"
 )
 
+type CreateSmartphoneHandler struct {
+	gateway.SmartphoneCreateGateway
+}
+
 func (h *CreateSmartphoneHandler) SaveSmartphoneHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	cmd := parseRequest(r)
-	res, err := h.Create(cmd)		
+	res, err := h.Create(cmd)
 	/*res, err := h.Create(&models.CreateSmartphoneCMD{
 		Name: "Samsung S9",
 		Price: 800,
@@ -37,30 +41,25 @@ func (h *CreateSmartphoneHandler) SaveSmartphoneHandler(w http.ResponseWriter, r
 func (h *CreateSmartphoneHandler) GetSmartphoneHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	smartphoneID ,err := strconv.ParseInt(chi.URLParam(r,"smartphoneID"),10,64)
-			
+	smartphoneID, err := strconv.ParseInt(chi.URLParam(r, "smartphoneID"), 10, 64)
+
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(map[string]string{"error": "cannot parse parameters"})
 		return
 	}
-	
+
 	res := h.GetSmartphoneByID(smartphoneID)
 
-	
 	if res == nil {
-		json.NewEncoder(w).Encode(map[string]string{"error": "smartphone id doesn't exist"})		
-	}	
-	
+		json.NewEncoder(w).Encode(map[string]string{"error": "smartphone id doesn't exist"})
+	}
+
 	json.NewEncoder(w).Encode(&res)
 }
 
-type CreateSmartphoneHandler struct {	
-	gateway.SmartphoneCreateGateway
-}
+func NewCreateSmartphoneHandler(client *database.MySqlClient) *CreateSmartphoneHandler {
 
-func NewCreateSmartphoneHandler(client *database.MySqlClient) *CreateSmartphoneHandler {	
-	
 	return &CreateSmartphoneHandler{gateway.NewSmartphoneCreateGateway(client)}
 }
 

@@ -4,6 +4,9 @@
 ## explicit
 # github.com/containerd/containerd v1.4.1
 ## explicit
+# github.com/dgrijalva/jwt-go v3.2.0+incompatible
+## explicit
+github.com/dgrijalva/jwt-go
 # github.com/docker/distribution v2.7.1+incompatible
 ## explicit
 # github.com/docker/docker v17.12.0-ce-rc1.0.20200618181300-9dc6525e6118+incompatible
@@ -36,6 +39,8 @@ github.com/golang-migrate/migrate/source/file
 ## explicit
 # github.com/morikuni/aec v1.0.0
 ## explicit
+# github.com/myesui/uuid v1.0.0
+## explicit
 # github.com/opencontainers/go-digest v1.0.0
 ## explicit
 # github.com/opencontainers/image-spec v1.0.1
@@ -46,6 +51,9 @@ github.com/golang-migrate/migrate/source/file
 ## explicit
 # github.com/stretchr/testify v1.5.1
 ## explicit
+# github.com/twinj/uuid v1.0.0
+## explicit
+github.com/twinj/uuid
 # go.uber.org/atomic v1.6.0
 go.uber.org/atomic
 # go.uber.org/multierr v1.5.0
@@ -75,6 +83,8 @@ go.uber.org/zap/zapcore
 # google.golang.org/grpc v1.33.1
 ## explicit
 # google.golang.org/protobuf v1.25.0
+## explicit
+# gopkg.in/stretchr/testify.v1 v1.2.2
 ## explicit
 # gopkg.in/yaml.v2 v2.2.8
 ## explicit

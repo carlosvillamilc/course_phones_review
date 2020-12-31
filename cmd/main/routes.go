@@ -1,7 +1,8 @@
 package main
 
 import (
-	"course-phones-review/gadgets/smartphones/web"
+	web_smartphone "course-phones-review/gadgets/smartphones/web"
+	web_user "course-phones-review/gadgets/users/web"
 	"encoding/json"
 
 	"github.com/go-chi/chi"
@@ -13,7 +14,8 @@ import (
 )
 
 func Routes(
-	sph *web.CreateSmartphoneHandler,
+	sph *web_smartphone.CreateSmartphoneHandler,
+	uh *web_user.CreateUserHandler,
 	//reviewHandler *reviews.ReviewHandler,
 ) *chi.Mux {
 	mux := chi.NewMux()
@@ -23,10 +25,18 @@ func Routes(
 		middleware.Logger,    //log every http request
 		middleware.Recoverer, // recover if a panic occurs
 	)
-	mux.Route("/smartphones",func(r chi.Router){
+
+	mux.Route("/users", func(r chi.Router) {
+		r.Post("/auth", uh.AuthUserHandler)
+		r.Post("/", uh.SaveUserHandler)
+		r.Get("/{userID:[0-9]+}", uh.GetUserHandler)
+	})
+
+	mux.Route("/smartphones", func(r chi.Router) {
 		r.Post("/", sph.SaveSmartphoneHandler)
 		r.Get("/{smartphoneID:[0-9]+}", sph.GetSmartphoneHandler)
 	})
+
 	//mux.Post("/smartphones", sph.SaveSmartphoneHandler)
 	mux.Get("/hello", helloHandler)
 	//mux.Post("/reviews", reviewHandler.AddReviewHandler)
