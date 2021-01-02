@@ -12,12 +12,13 @@ import (
 	web_user "course-phones-review/gadgets/users/web"
 	"course-phones-review/internal/database"
 	"course-phones-review/internal/logs"
+	web_buyer "course-phones-review/restaurant/buyers/web"
 	//reviews "github.com/tomiok/course-phones-review/reviews/web"
 )
 
 const (
 	migrationsRootFolder     = "file://migrations"
-	migrationsScriptsVersion = 1
+	migrationsScriptsVersion = 2
 )
 
 func main() {
@@ -32,8 +33,10 @@ func main() {
 
 	smartphoneHandler := web_smartphone.NewCreateSmartphoneHandler(client)
 	userHandler := web_user.NewCreateUserHandler(client)
+	buyerHandler := web_buyer.NewCreateBuyerHandler(client)
+
 	//mux := Routes(handler, reviewHandler)
-	mux := Routes(smartphoneHandler, userHandler)
+	mux := Routes(smartphoneHandler, userHandler, buyerHandler)
 	server := NewServer(mux)
 	server.Run()
 }

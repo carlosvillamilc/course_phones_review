@@ -3,6 +3,7 @@ package main
 import (
 	web_smartphone "course-phones-review/gadgets/smartphones/web"
 	web_user "course-phones-review/gadgets/users/web"
+	web_buyer "course-phones-review/restaurant/buyers/web"
 	"encoding/json"
 
 	"github.com/go-chi/chi"
@@ -16,6 +17,7 @@ import (
 func Routes(
 	sph *web_smartphone.CreateSmartphoneHandler,
 	uh *web_user.CreateUserHandler,
+	bh *web_buyer.CreateBuyerHandler,
 	//reviewHandler *reviews.ReviewHandler,
 ) *chi.Mux {
 	mux := chi.NewMux()
@@ -35,6 +37,11 @@ func Routes(
 	mux.Route("/smartphones", func(r chi.Router) {
 		r.Post("/", sph.SaveSmartphoneHandler)
 		r.Get("/{smartphoneID:[0-9]+}", sph.GetSmartphoneHandler)
+	})
+
+	mux.Route("/buyers", func(r chi.Router) {
+		r.Post("/", bh.SaveBuyerHandler)
+		//r.Get("/{smartphoneID:[0-9]+}", sph.GetSmartphoneHandler)
 	})
 
 	//mux.Post("/smartphones", sph.SaveSmartphoneHandler)

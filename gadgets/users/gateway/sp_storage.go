@@ -7,7 +7,7 @@ import (
 )
 
 type UserStorageGateway interface {
-	create(cmd *models.CreateUserCMD) (*models.User, error)
+	Create(cmd *models.CreateUserCMD) (*models.User, error)
 	GetUserByID(userID int64) *models.User
 	Authenticate(cmd *models.CreateUserCMD) (*models.User, error)
 }
@@ -45,7 +45,7 @@ func (s *UserStorage) Authenticate(cmd *models.CreateUserCMD) (*models.User, err
 	}, nil
 }
 
-func (s *UserStorage) create(cmd *models.CreateUserCMD) (*models.User, error) {
+func (s *UserStorage) Create(cmd *models.CreateUserCMD) (*models.User, error) {
 
 	tx, err := s.MySqlClient.Begin()
 
