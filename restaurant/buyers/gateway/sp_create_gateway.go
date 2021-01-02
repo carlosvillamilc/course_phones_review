@@ -6,7 +6,8 @@ import (
 )
 
 type BuyerCreateGateway interface {
-	LoadBuyers(cmd []models.Buyer) (*models.Buyer, error)
+	SaveBuyers(cmd []models.Buyer) (*models.Buyer, error)
+	SaveProducts(cmd string) (*models.Buyer, error)
 	/*GetUserByID(userID int64) *models.Buyer
 	Authenticate(cmd *models.CreateBuyerCMD) (*models.Buyer, error)*/
 }

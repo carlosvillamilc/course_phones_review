@@ -40,7 +40,7 @@ func Routes(
 	})
 
 	mux.Route("/buyers", func(r chi.Router) {
-		r.Post("/", bh.SaveBuyerHandler)
+		r.Post("/", bh.SaveDataHandler)
 		//r.Get("/{smartphoneID:[0-9]+}", sph.GetSmartphoneHandler)
 	})
 

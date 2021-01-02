@@ -13,3 +13,10 @@ type CreateBuyerCMD struct {
 	Name string `json:"name"`
 	Age  int    `json:"age"`
 }
+
+//Product model structure
+type Product struct {
+	Id    string
+	Name  string
+	Price int
+}

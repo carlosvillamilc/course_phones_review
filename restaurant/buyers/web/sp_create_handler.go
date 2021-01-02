@@ -39,7 +39,7 @@ func parseResponse(r *http.Request) *models.CreateBuyerCMD {
 	return &cmd
 }
 
-func (h *CreateBuyerHandler) SaveBuyerHandler(w http.ResponseWriter, r *http.Request) {
+func (h *CreateBuyerHandler) SaveDataHandler(w http.ResponseWriter, r *http.Request) {
 
 	response, err := http.Get("https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/buyers")
 
@@ -54,11 +54,33 @@ func (h *CreateBuyerHandler) SaveBuyerHandler(w http.ResponseWriter, r *http.Req
 	if err != nil {
 		logs.Log().Error(err.Error())
 	}
+
 	var buyer_arr []models.Buyer
 
 	json.Unmarshal([]byte(responseData), &buyer_arr)
 
-	res, err := h.LoadBuyers(buyer_arr)
+	res, err := h.SaveBuyers(buyer_arr)
+
+	response, err = http.Get("https://kqxty15mpg.execute-api.us-east-1.amazonaws.com/products")
+
+	logs.Log().Debug(response)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		m := map[string]interface{}{"msg": "Error connecting to products endpoint"}
+		_ = json.NewEncoder(w).Encode(m)
+		return
+	}
+
+	responseData, err = ioutil.ReadAll(response.Body)
+	if err != nil {
+		logs.Log().Error(err.Error())
+	}
+
+	//responseString := string(responseData)
+
+	res, err = h.SaveProducts(string(responseData))
+
 	/*cmd := parseResponse(response.Body)
 	logs.Log().Debug(cmd)*/
 

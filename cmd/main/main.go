@@ -18,7 +18,7 @@ import (
 
 const (
 	migrationsRootFolder     = "file://migrations"
-	migrationsScriptsVersion = 2
+	migrationsScriptsVersion = 3
 )
 
 func main() {
